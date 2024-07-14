@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/assets/css/prism.css" />
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link rel="stylesheet" href="/assets/css/prism-live.css" />
+  <link rel="stylesheet" href="https://prismjs.com/plugins/line-numbers/prism-line-numbers.css" />
+  <title>Prism.js editor playground</title>
+
+</head>
+<body>
+
+  <textarea id="editor" class="prism-live line-numbers"></textarea>
+
+  <script src="/assets/js/prism.js"></script>
+  <script src="/assets/js/prism-live/prism-live.js"></script>
+  <script src="https://prismjs.com/plugins/line-numbers/prism-line-numbers.js"></script>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const language = urlParams.get('lang') ?? "js";
+  
+    if (!urlParams.has('lang')) {
+      urlParams.set('lang', language);
+      window.history.replaceState({}, '', `${window.location.pathname}?${urlParams}`);
+    }
+
+    const editor = document.getElementById('editor');
+    editor.classList.add(`language-${language}`);
+    editor.focus();
+
+    // set click listener on body to focus on editor
+    document.body.addEventListener('click', () => {
+      editor.focus();
+    });
+
+    editor.value = "The editor is ready!";
+  </script>
+</body>
+</html>
