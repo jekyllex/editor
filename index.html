@@ -34,7 +34,7 @@
     const language = urlParams.get('lang') ?? "js";
 
     const text = typeof urlParams.get('text') === "string"
-      ? atob(urlParams.get('text'))
+      ? atob(decodeURIComponent(urlParams.get('text')))
       : "The editor is ready!";
   
     if (!urlParams.has('lang')) {
