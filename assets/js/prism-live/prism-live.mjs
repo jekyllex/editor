@@ -176,7 +176,8 @@ export default class PrismLive {
 		this.textarea.addEventListener("scroll", this, {passive: true});
 
 		$.bind(window, {
-			"resize": evt => this.syncStyles()
+			"resize": _ => this.syncStyles(),
+      "sync": _ => this.syncStyles(),
 		});
 
 		// Copy styles with a delay
