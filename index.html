@@ -31,7 +31,7 @@
 
   <script type="text/javascript">
     const urlParams = new URLSearchParams(window.location.search);
-    const language = urlParams.get('lang') ?? "js";
+    const language = urlParams.get('lang') ?? "rb";
 
     const text = typeof urlParams.get('text') === "string"
       ? atob(decodeURIComponent(urlParams.get('text')))
