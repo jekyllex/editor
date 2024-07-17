@@ -680,9 +680,7 @@ Object.assign(self, {
 	})(),
 });
 
-export const dependencies = [
-	$.load(new URL("../prism-live.css", import.meta.url)),
-];
+export const dependencies = [];
 
 let url = new URL(import.meta.url);
 let urlParams = url.searchParams;
