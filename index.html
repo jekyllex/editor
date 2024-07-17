@@ -20,23 +20,32 @@
   <script src="https://prismjs.com/plugins/line-numbers/prism-line-numbers.js"></script>
 
   <script type="text/javascript">
-    const syncEvent = new CustomEvent('sync');
+    let _text = "";
+    const syncEvent = new CustomEvent("sync");
 
-    function setText(text) {
-      console.log(text);
-      editor.value = text;
+    function setText(base64) {
+      _text = base64 ? atob(base64) : "The editor is ready!";
+      editor.value = _text;
       window.dispatchEvent(syncEvent);
+    }
+
+    function getText() {
+      return btoa(_text);
     }
   </script>
 
   <script type="text/javascript">
     const urlParams = new URLSearchParams(window.location.search);
     const language = urlParams.get('lang') ?? "rb";
+    const timeout = urlParams.get('timeout') ?? 1000;
 
     const text = typeof urlParams.get('text') === "string"
-      ? atob(decodeURIComponent(urlParams.get('text')))
-      : "The editor is ready!";
-  
+      ? decodeURIComponent(urlParams.get('text'))
+      : undefined;
+    
+    urlParams.delete('text');
+    window.history.replaceState({}, '', `${window.location.pathname}?${urlParams}`);
+
     if (!urlParams.has('lang')) {
       urlParams.set('lang', language);
       window.history.replaceState({}, '', `${window.location.pathname}?${urlParams}`);
@@ -52,6 +61,23 @@
     });
 
     setText(text);
+  </script>
+
+  <script type="text/javascript">
+    const debounce = (fn, timeout) => {
+      let timer;
+
+      return (value) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.call(this, value), timeout);
+      }
+    }
+
+    window.debounce = debounce((value) => {
+      _text = value;
+      const base64 = btoa(value);
+      if (typeof IOBridge != 'undefined') IOBridge.saveText(base64);
+    }, timeout);
   </script>
 </body>
 </html>

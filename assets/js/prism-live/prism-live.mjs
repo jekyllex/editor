@@ -75,7 +75,10 @@ export default class PrismLive {
 		}
 
 		$.bind(this.textarea, {
-			input: evt => this.update(),
+			input: _ => {
+				this.update();
+				window.debounce(this.value);
+			},
 
 			keyup: evt => {
 				if (evt.key == "Enter") { // Enter
