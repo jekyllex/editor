@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/assets/css/prism.css" />
   <link rel="stylesheet" href="/assets/css/styles.css" />
   <link rel="stylesheet" href="/assets/css/prism-live.css" />
-  <link rel="stylesheet" href="https://prismjs.com/plugins/line-numbers/prism-line-numbers.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
   <title>Prism.js editor playground</title>
 
 </head>
@@ -15,9 +15,10 @@
 
   <textarea id="editor" class="prism-live line-numbers"></textarea>
 
-  <script src="/assets/js/prism.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="/assets/js/prism-live/prism-live.js"></script>
-  <script src="https://prismjs.com/plugins/line-numbers/prism-line-numbers.js"></script>
 
   <script type="text/javascript">
     let _text = "";
@@ -36,27 +37,31 @@
 
   <script type="text/javascript">
     const urlParams = new URLSearchParams(window.location.search);
-    const language = urlParams.get('lang') ?? "rb";
-    const timeout = urlParams.get('timeout') ?? 1000;
+    const language = urlParams.get("lang") ?? "rb";
+    const timeout = urlParams.get("timeout") ?? 1000;
 
-    const text = typeof urlParams.get('text') === "string"
-      ? decodeURIComponent(urlParams.get('text'))
-      : undefined;
-    
-    urlParams.delete('text');
-    window.history.replaceState({}, '', `${window.location.pathname}?${urlParams}`);
-
-    if (!urlParams.has('lang')) {
-      urlParams.set('lang', language);
-      window.history.replaceState({}, '', `${window.location.pathname}?${urlParams}`);
+    if (language == "md" || language == "markdown" ) {
+      Prism.plugins.autoloader.loadLanguages("yaml");
     }
 
-    const editor = document.getElementById('editor');
+    const text = typeof urlParams.get("text") === "string"
+      ? decodeURIComponent(urlParams.get("text"))
+      : undefined;
+
+    urlParams.delete("text");
+    window.history.replaceState({}, "", `${window.location.pathname}?${urlParams}`);
+
+    if (!urlParams.has("lang")) {
+      urlParams.set("lang", language);
+      window.history.replaceState({}, "", `${window.location.pathname}?${urlParams}`);
+    }
+
+    const editor = document.getElementById("editor");
     editor.classList.add(`language-${language}`);
     editor.focus();
 
     // set click listener on body to focus on editor
-    document.body.addEventListener('click', () => {
+    document.body.addEventListener("click", () => {
       editor.focus();
     });
 
@@ -76,7 +81,7 @@
     window.debounce = debounce((value) => {
       _text = value;
       const base64 = btoa(value);
-      if (typeof IOBridge != 'undefined') IOBridge.saveText(base64);
+      if (typeof IOBridge != "undefined") IOBridge.saveText(base64);
     }, timeout);
   </script>
 </body>
