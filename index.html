@@ -36,9 +36,17 @@
   </script>
 
   <script type="text/javascript">
+    const mapping = {
+      "h": "c",
+      "bat": "batch",
+      "ps1": "powershell",
+      "psm1": "powershell",
+    };
+
     const urlParams = new URLSearchParams(window.location.search);
-    const language = urlParams.get("lang") ?? "rb";
+
     const timeout = urlParams.get("timeout") ?? 1000;
+    const language = mapping[urlParams.get("lang")] ?? urlParams.get("lang") ?? "rb";
 
     if (language == "md" || language == "markdown" ) {
       Prism.plugins.autoloader.loadLanguages("yaml");
