@@ -25,9 +25,10 @@
     const syncEvent = new CustomEvent("sync");
 
     function setText(base64) {
-      _text = base64 ? atob(base64) : "The editor is ready!";
+      _text = atob(base64);
       editor.value = _text;
       window.dispatchEvent(syncEvent);
+      if (typeof IOBridge != "undefined") IOBridge.setLoaded();
     }
 
     function getText() {
@@ -72,7 +73,7 @@
       editor.focus();
     });
 
-    setText(text);
+    if (text != undefined) setText(text);
   </script>
 
   <script type="text/javascript">
