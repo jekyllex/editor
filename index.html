@@ -4,7 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/assets/css/prism/one-light.css" />
+  <script>
+    const themeMap = {
+      1: "one-light",
+      2: "one-dark",
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const theme = themeMap[urlParams.get("theme")] ?? themeMap[1];
+
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = `/assets/css/prism/${theme}.css`;
+    document.head.prepend(link);
+  </script>
+
   <link rel="stylesheet" href="/assets/css/styles.css" />
   <link rel="stylesheet" href="/assets/css/prism-live.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
@@ -36,7 +50,7 @@
   </script>
 
   <script type="text/javascript">
-    const mapping = {
+    const langMap = {
       "h": "c",
       "bat": "batch",
       "markdown": "md",
@@ -44,10 +58,8 @@
       "psm1": "powershell",
     };
 
-    const urlParams = new URLSearchParams(window.location.search);
-
     const timeout = urlParams.get("timeout") ?? 1000;
-    const language = mapping[urlParams.get("lang")] ?? urlParams.get("lang") ?? "rb";
+    const language = langMap[urlParams.get("lang")] ?? urlParams.get("lang") ?? "rb";
 
     if (language == "md") Prism.plugins.autoloader.loadLanguages("yaml");
 
