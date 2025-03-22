@@ -34,11 +34,11 @@
  */
 
  body {
-  background: hsl(220, 13%, 18%);
+   background: hsl(220, 13%, 18%);
  }
 
  textarea.prism-live {
-	--selection-background: hsl(220, 13%, 28%) !important;
+   --selection-background: hsl(220, 13%, 28%) !important;
  }
 
  code[class*="language-"],

@@ -12,11 +12,11 @@ Generated with Base16 Builder (https://github.com/base16-builder/base16-builder)
 */
 
 body {
-    background: #2a2734;
+	background: #2a2734;
 }
   
 textarea.prism-live {
-    --selection-background: hsl(220, 13%, 28%) !important;
+	--selection-background: hsl(220, 13%, 28%) !important;
 }
 
 code[class*="language-"],
