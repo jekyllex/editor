@@ -29,7 +29,7 @@ textarea.prism-live {
 	outline: none;
 	background: transparent;
 	resize: none;
-  scrollbar-width: none;
+	scrollbar-width: none;
 	--selection-background: hsl(320, 80%, 25%);
 	--selection-color: hsla(0, 0%, 100%, .8);
 }
