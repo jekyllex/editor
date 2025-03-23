@@ -35,19 +35,31 @@
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="/assets/js/prism-live/prism-live.js"></script>
 
+  <script>
+    function encode64(value) {
+      const bytes = new TextEncoder().encode(value);
+      return btoa(String.fromCodePoint(...bytes));
+    }
+
+    function decode64(base64) {
+      const bytes = Uint8Array.from(atob(base64), (m) => m.codePointAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+  </script>
+
   <script type="text/javascript">
     let _text = "";
     const syncEvent = new CustomEvent("sync");
 
     function setText(base64) {
-      _text = atob(base64);
+      _text = decode64(base64);
       editor.value = _text;
       window.dispatchEvent(syncEvent);
       if (typeof IOBridge != "undefined") IOBridge.setLoaded();
     }
 
     function getText() {
-      return btoa(_text);
+      return encode64(_text);
     }
   </script>
 
@@ -105,7 +117,7 @@
 
     window.debounce = debounce((value) => {
       _text = value;
-      const base64 = btoa(value);
+      const base64 = encode64(value);
       if (typeof IOBridge != "undefined") IOBridge.saveText(base64);
     }, timeout);
   </script>
