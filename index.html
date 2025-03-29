@@ -6,14 +6,14 @@
 
   <script>
     const themeMap = {
-      1: "one-light",
-      2: "one-dark",
-      3: "duotone-dark",
-      4: "duotone-space",
+      0: "one-light",
+      1: "one-dark",
+      2: "duotone-dark",
+      3: "duotone-space",
     };
 
     const urlParams = new URLSearchParams(window.location.search);
-    const theme = themeMap[urlParams.get("theme")] ?? themeMap[1];
+    const theme = themeMap[urlParams.get("theme")] ?? themeMap[0];
 
     var link = document.createElement("link");
     link.rel = "stylesheet";
